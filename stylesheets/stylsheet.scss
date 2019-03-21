@@ -1,0 +1,502 @@
+@import"normalize";/* 將normalize讀進stylsheet.scss裡。 */
+/* normalize前面要加一個底線，可使檔案不會直接被編譯。 */
+$main-color: #ff9204;
+%nostyle-list{/* 將會一直重複使用的程式碼，寫一次節省行數。 */
+    margin: 0;/* 將邊界(margin)縮小至0 */
+    padding: 0;/* 將內距(padding)縮小至0。 */
+    list-style: none;/* 取消清單的黑點點 */
+}
+@mixin r_t_w_i ($url,$width,$height)/* 製作模組，如果以後還有要做到相同的事的話，就可以直接套用。 */
+{
+    width: $width;
+    height: $height;
+    background: url($url) no-repeat;
+    background-size: 100% 100%;
+    text-indent: 110%;/* text-indent此屬性用於指定第一行縮排值*/
+    overflow: hidden;/* 因為上面的text-indent縮超過100%，故超出in-line了，未完 */
+    white-space: nowrap;
+}
+html{
+    font-size: 16px;
+    font-family: sans-serif;
+    line-height: 1.4;
+    color: #555;  
+}
+img{
+    max-width: 100%;
+}
+a{
+    color: #009ced;
+    text-decoration: none;
+    &:hover{
+        color: #0081c3;
+        text-decoration: underline;
+    }
+}
+
+
+.container{
+    width: 1080px;
+    margin: 0 auto;
+}
+.top-menu{
+    background-color: $main-color;
+    height: 36px;
+
+    ul{
+        @extend %nostyle-list;/* 引入省略的程式碼 */
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    a{
+        display: block;
+        width: 90px;
+        height: 36px;
+        line-height: 36px;
+        color: #fff;
+        text-align: center;
+        text-decoration: none; 
+        &:hover{
+            color:darken(#ff6204, 20%);/* 顏色加深20% */
+        }
+    }
+
+    i {
+        margin-right: 5px;
+    }
+}
+.top-block{height: 80px;
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 9px 0;
+    }
+}
+h1.logo{
+    margin: 0;
+    img {
+        width: 250px;
+        height: 62px;
+        display: block;
+    }
+}
+.search {
+    position: relative;
+    display: block;
+    input{
+        height: 28px;
+        width: 250px;
+        border: 2px;
+        border-color: #ddd;
+        border-radius: 17px;
+        border-style: solid;
+        padding-left: 35px;
+        &:focus{
+            outline: none;
+            border-color: #009ced;
+            box-shadow: #009ced 0 0 2px;
+        }
+    }
+    i{
+        position: absolute;
+        left: 10px;
+        top: 9px;
+    }
+}
+.main-menu{
+    height: 38px;
+    button{
+        display: none;
+    }
+    ul{
+        @extend %nostyle-list;
+        display: flex;/* 將ul由左至右的排列 */
+    }
+    li{
+        flex: 0 0 20%;/* 翻flex-box的講義 */
+        /* 第一個0是flex-grow的0，也就是指定子元素不會自動填滿容器。第二個0是flex-shrink的0，也就是容器尺寸不足時子元素不會自動縮減尺寸。第三個是flex-basis */
+    }
+    a{
+        display: block;
+        line-height: 36px;
+        color: #3d4143;
+        text-align: center;
+        text-decoration: none; 
+        transition-property: background-color;/* 要發生轉場效果的屬性 */
+        transition-duration: .3s;/* 發生轉場發生的時長 */
+        &:hover{
+            color: #fff;
+            background-color: $main-color;
+        }
+    }
+
+}
+.index-image { 
+    height: 400px; 
+    background: url(../images/index-image.jpg)/* 之所以路徑前面要../是因為我們是由stylesheet.css去抓資料， */
+    center center no-repeat; 
+    background-size: cover;
+    .container{
+        position: relative;
+        height: 100%;/* 抓外層容器的高度 */  
+    }
+    h2{
+        font-size: 50px;
+        color:#fff;/* 為了避免就瀏覽器吃不到rgba的顏色才寫這一行。 */
+        color: rgba(255, 255, 255, 0.8);
+        position: absolute;
+        margin: 0 0 0 150px;
+        left: 50%;
+        bottom: 80px;           
+    }
+    & h2 span{
+        display: block;
+        position: relative;
+        left: 2em;
+    } 
+}
+.new-items{
+    padding: 40px 0;
+    ul{
+        @extend %nostyle-list;
+        display: flex;
+        justify-content: space-between;/* 把容器(ul)裡的東西(li)照他的排列，將間距30px用這個分配好了 */
+    }
+    li{
+        flex:0 0 340px;
+    }
+}
+.featured-item{
+    background-color: #eee;
+    padding: 40px 0;
+    h2{
+        color: $main-color;
+        font-size: 2rem;/* rem以html容器的font-size為基準進行加乘。 */
+        text-align: center;
+        margin: 0 0 30px;/*  */
+    }
+    .user{
+        float:right;
+        margin-top: 30px;
+        img{
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;/* 也可以用50%但只能用在全圓形的，用在長方形只會變橢圓。 */
+            vertical-align: middle;
+        }
+    }
+}
+.item-content{
+    display: flex;
+}
+.item-img{
+    flex: 0 0 360px;
+    margin-right:30px;
+    h3{
+        margin-top: 0;/* 因為瀏覽器會預設h1~h6上下都會有預留，故我們要消除他。 */
+        font-size: 1.5rem;
+    }
+}
+.item-text{
+    flex-grow: 1;
+} 
+.news-and-principle{
+    padding: 40px 0;
+    .container{
+        display: flex;
+
+    }
+}
+
+.news{
+    flex:1;
+    min-width: 0;
+    margin-right: auto;
+    h2{
+        margin: 0 0 20px;
+        @include r_t_w_i("../images/news-title@2x.png",120px,36px )/* 引入做好的模組 */
+    }
+    li{
+        @extend %nostyle-list;
+        padding: 8px;
+        border-bottom: 1px #ddd dotted ;
+        &:nth-child(even){/*nth-child(even) 未完 */
+            background: #f5f5f5;
+        }
+
+    }           
+    a {
+        display: block; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }   
+    ul{
+       padding: 0;
+    }
+}
+
+.principle{
+    flex: 0 0 280px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column-reverse;/* 改變flex的排列軸項。*/
+    color: #fff;
+    h2{
+        margin: 0;
+        height: 60px;
+        padding: 20px;
+        background-color: #5f5547;
+        position: relative;
+        &::before{
+            content: "";
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background:#fff url(../images/cat-head-animate@2x.png) no-repeat;
+            background-size: 60px 300px;/* 將原尺寸除2 */
+            border-radius: 50%;
+            vertical-align: middle;/* 設計網頁中圖片在垂直方向的對齊方式 */
+            animation-name: cat-saying;
+            animation-duration: .4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(1);
+            }
+        &::after{/*::before是CSS造出的假元素，一定要有content，可提供無內容引號為值。  */
+            content:"";
+            display: block;
+            position: absolute;
+            /* 以下是做出三角形的過程 */
+            width: 0;
+            height: 0;
+            border: transparent 8px solid;/* transparent是透明的意思 */
+            border-top: $main-color 8px solid;
+            /* 這裡是將三角形移動到正確的位置 */
+            left: 40px;
+            top: 0px;
+        }   
+    }
+    img{
+        display:none;
+    }
+}
+
+@keyframes cat-saying {
+    0%{
+        background-position: 0 0px;
+    }
+    25%{
+        background-position: 0 -60px;
+    }
+    50%{
+        background-position: 0 -120px;
+    }
+    75%{
+        background-position: 0 -180px;
+    }
+    100%{
+        background-position: 0 -240px;
+    }
+}
+
+.principle-content{
+    background-color: $main-color;
+    padding: 10px;
+    li{
+        margin: 10px 0;
+        font-size: 18px;
+    }
+}
+.page-footer{
+    padding: 40px 0;
+    background-color: #3d4143;
+    color: #fff;
+    text-align: center;
+    .business-hours{
+        flex: 0 0 100%;
+        margin: 20px 0;
+    }
+    ul{
+        @extend %nostyle-list;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    li{/* 前面加 & 代表的是li的父類別，ul。 */
+        flex: 1;
+    }
+}
+@media screen and(max-width:1140px){
+    .container{
+        width: 820px;
+    }
+    .index-image h2{
+        left: auto;
+        margin: 0;
+        right: 2em;
+    }
+    .new-items{
+        li{
+            flex:0 0 260px;
+        }
+    }
+}
+@media screen and(max-width:880px){
+    .container{
+        width: 740px;
+    }
+    .new-items{
+        ul{
+            flex-direction: column;
+        }
+        li{
+            display: flex;
+            flex-basis: auto;
+            margin-bottom: 20px;
+        }
+        li>a{
+            flex: 0 0 200px;
+            margin-right: 20px;
+        }
+        li>div{
+            flex:1;
+        }
+        li h2{
+            margin-top: 0;
+        }
+        li:nth-child(3){
+            margin-bottom: 0;
+        }
+    }
+    .news-and-principle .container{
+        flex-direction: column;
+    }
+    .news{
+        margin: 1.3em;
+    }
+    .principle{
+        margin-left: 0;
+        flex-direction: column;
+        h2{
+            background: transparent;
+            color: #3d4143;
+            padding: 0;
+            &::after{
+                display: none;
+            }
+            &::before{
+                border: #ff9204 5px solid;
+            }
+        }
+        ol{
+            list-style: none;
+            li{
+                position: relative;
+            }
+            li::before{
+                height: 20px;
+				width: 20px;
+				display: block;
+				border-radius: 50%;
+				background: #fff;
+				color: #EC7D05;
+				text-align: center;
+				line-height: 20px;
+				position: absolute;
+				top: 2px;
+				left: -1.5em;
+            }
+            li:nth-child(1)::before{
+				content: "1";
+			}
+			li:nth-child(2)::before{
+				content: "2";
+			}
+			li:nth-child(3)::before{
+				content: "3";
+			}
+        }
+    }
+    .page-footer{
+        ul{
+            flex-direction: column;
+        }
+        li{
+            margin: .3em 0;
+        }
+    }
+}
+@media screen and (max-width:767px){
+    .container{
+        width: 90%;
+    }
+    .item-content{
+        flex-direction: column;
+    }
+    .item-img{
+		flex-basis: auto;
+		margin: 0 0 20px;
+		img{
+			display: block;
+			margin:  0 auto;
+		}
+	}
+	.featured-item h3{
+		text-align: center;
+	}
+}
+@media screen and (max-width:640px){
+    .top-block{
+        .container{
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    h1.logo{
+        margin-bottom: 10px;
+    }
+    .main-menu{
+		position: relative;
+		.container{
+			width: 100%;
+		}		
+		i{
+			margin-left: 5px;
+		}
+		ul{
+			flex-direction: column;
+			position: absolute;
+			top: 40px;
+			width: 100%;
+			background: rgba(#fff, 0.9);
+			z-index: 5;
+		}
+		button{
+			display: block;
+			background: #fff;
+			border: none;
+			width: 100%;
+			height: 40px;
+		}
+    }
+}
+@media screen and (max-width:580px){
+    .index-image h2{
+        font-size: 30px;
+    }
+    .new-items li{
+        flex-direction: column;
+        align-items: center;
+        h2{
+            text-align: center;
+            margin-top: 10px;
+        }
+    }
+    .news a{
+        white-space: normal;
+    }
+}
+
